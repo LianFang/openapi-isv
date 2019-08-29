@@ -1,0 +1,21 @@
+server:
+  port: 80
+
+spring:
+  cloud:
+    gateway:
+      discovery:
+        locator:
+          enabled: true
+    loadbalancer:
+      retry:
+        enabled: true
+
+# 聚合文档配置
+blade:
+  document:
+    resources:
+      - name: 演示模块
+        location: /blade-demo
+      - name: isv管理
+        location: /openapi-isv

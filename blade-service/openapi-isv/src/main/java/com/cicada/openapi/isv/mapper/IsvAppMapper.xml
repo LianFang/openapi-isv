@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.cicada.openapi.isv.mapper.IsvAppMapper">
+
+    <!-- 通用查询映射结果 -->
+    <resultMap id="isvAppResultMap" type="com.cicada.openapi.isv.entity.IsvApp">
+        <id column="id" property="id"/>
+        <result column="client_id" property="clientId"/>
+        <result column="name" property="name"/>
+        <result column="remark" property="remark"/>
+        <result column="isv_user_id" property="isvUserId"/>
+        <result column="create_user" property="createUser"/>
+        <result column="create_time" property="createTime"/>
+        <result column="update_user" property="updateUser"/>
+        <result column="update_time" property="updateTime"/>
+        <result column="status" property="status"/>
+        <result column="is_deleted" property="isDeleted"/>
+    </resultMap>
+
+
+    <select id="selectIsvAppPage" resultMap="isvAppResultMap">
+        select * from t_isv_app where is_deleted = 0
+    </select>
+
+</mapper>
