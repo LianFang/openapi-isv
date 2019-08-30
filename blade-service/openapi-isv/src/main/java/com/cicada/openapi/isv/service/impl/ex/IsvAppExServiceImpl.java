@@ -57,7 +57,7 @@ public class IsvAppExServiceImpl {
 
 		int count = isvInfoService.count(Wrappers.<IsvInfo>query().eq("user_id", isvApp.getIsvUserId().longValue()));
 
-		if(count < 0){
+		if (count < 1) {
 			throw new IllegalArgumentException("isv user_id is invalid: " + isvApp.getIsvUserId().longValue());
 		}
 

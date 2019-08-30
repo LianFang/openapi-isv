@@ -14,27 +14,4 @@
     <name>${project.artifactId}</name>
     <version>${bladex.project.version}</version>
     <packaging>jar</packaging>
-
-<dependencies>
-    <dependency>
-        <groupId>org.springblade</groupId>
-        <artifactId>blade-user-api</artifactId>
-        <version>${bladex.user-api.version}</version>
-        <exclusions>
-            <exclusion>
-                <groupId>org.springblade</groupId>
-                <artifactId>blade-core-secure</artifactId>
-            </exclusion>
-        </exclusions>
-    </dependency>
-
-    <dependency>
-        <groupId>org.springblade</groupId>
-        <artifactId>blade-system-api</artifactId>
-        <version>${bladex.system-api.version}</version>
-    </dependency>
-
-</dependencies>
-
-
 </project>

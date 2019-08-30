@@ -23,7 +23,7 @@ import javax.validation.Valid;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/isvinfo-ex")
-@Api(value = "isv扩展api，主要用来进行复杂业务的处理")
+@Api(value = "isv扩展api，主要用来进行复杂业务的处理", tags = "isv基础业务，目前isv+tp业务中创建isv必须调用该路径下的save接口")
 public class IsvInfoExController extends BladeController {
 
 	private IsvInfoExServiceImpl isvInfoExService;

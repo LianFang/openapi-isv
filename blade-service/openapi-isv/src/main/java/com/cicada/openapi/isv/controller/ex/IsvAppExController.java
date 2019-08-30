@@ -8,10 +8,9 @@ import io.swagger.annotations.ApiOperationSupport;
 import lombok.AllArgsConstructor;
 import org.springblade.core.boot.ctrl.BladeController;
 import org.springblade.core.tool.api.R;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springblade.system.entity.AuthClient;
+import org.springblade.system.feign.IAuthClient;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
 
@@ -23,16 +22,31 @@ import javax.validation.Valid;
 @RestController
 @RequestMapping("/isvapp-ex")
 @AllArgsConstructor
-@Api("isvapp 扩展，主要用来为isv分配clientId,clientSecret")
+@Api(value = "isvapp 扩展，主要用来为isv分配clientId,clientSecret", tags = "为isv分配clientId,clientSecret，目前isv+tp业务中创建isv的应用必须调用该路径下的save接口")
 public class IsvAppExController extends BladeController {
 
 	private IsvAppExServiceImpl isvAppExService;
+	private IAuthClient authClientService;
 
 	@PostMapping("/save")
 	@ApiOperationSupport(order = 4)
 	@ApiOperation(value = "创建IsvApp", notes = "传入IsvAppVO")
 	public R save(@Valid @RequestBody IsvAppVO isvAppVO) {
 		return R.status(isvAppExService.create(isvAppVO));
+	}
+
+	/**
+	 * 详情
+	 */
+	@GetMapping("/detail")
+	@ApiOperationSupport(order = 1)
+	@ApiOperation(value = "详情")
+	public R<AuthClient> detail(AuthClient authApp) {
+		R<AuthClient> detail = authClientService.detailOnPost(authApp);
+		if (detail.isSuccess())
+			return R.data(detail.getData());
+		else
+			return R.fail(detail.getCode(), detail.getMsg());
 	}
 
 }
