@@ -39,6 +39,9 @@ public class IsvInfoVO implements Serializable {
 
 	private Long id;
 
+	@ApiModelProperty(value = "isv的UserId,创建时不需要填，修改时必须填")
+	private Long userId;
+
 	@ApiModelProperty(value = "isv的联系人", required = true)
 	private String contact;
 	/**
@@ -62,9 +65,9 @@ public class IsvInfoVO implements Serializable {
 	@ApiModelProperty(value = "isv地址", required = true)
 	private String address;
 
-	@ApiModelProperty(value = "isv账号，在换取token时使用，以后也会在公网开放登陆", required = true)
+	@ApiModelProperty(value = "isv账号，在换取token时使用，以后也会在公网开放")
 	private String account;
-	@ApiModelProperty(value = "isv密码，在换取token时使用，以后也会在公网开放登陆", required = true)
+	@ApiModelProperty(value = "isv密码，在换取token时使用，以后也会在公网开放")
 	private String password;
 	@ApiModelProperty(value = "isv联系人头像")
 	private String avatar;

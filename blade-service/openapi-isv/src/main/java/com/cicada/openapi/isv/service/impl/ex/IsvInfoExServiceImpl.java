@@ -1,8 +1,11 @@
 package com.cicada.openapi.isv.service.impl.ex;
 
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.cicada.openapi.isv.entity.IsvInfo;
 import com.cicada.openapi.isv.service.IIsvInfoService;
 import com.cicada.openapi.isv.vo.IsvInfoVO;
+import com.google.common.collect.Maps;
+import org.apache.commons.lang3.StringUtils;
 import org.springblade.core.secure.utils.SecureUtil;
 import org.springblade.core.tool.api.R;
 import org.springblade.core.tool.utils.BeanUtil;
@@ -14,6 +17,7 @@ import org.springframework.stereotype.Component;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 /**
  * @version 1.0
@@ -55,6 +59,13 @@ public class IsvInfoExServiceImpl{
 
 		user.setRealName(user.getName());
 
+		//轻量级tp中没有account和password的概念，默认使用phone字段，既当account又当password
+		if (StringUtils.isBlank(user.getAccount())) {
+			user.setAccount(isvInfo.getPhone());
+		}
+		if (StringUtils.isBlank(user.getPassword())) {
+			user.setPassword(isvInfo.getPhone());
+		}
 
 		User fill = fillData(user);
 
@@ -66,6 +77,16 @@ public class IsvInfoExServiceImpl{
 
 
 		isvInfo.setUserId(userData.getId());
+
+		Map<String, Object> condition = Maps.newHashMap();
+		condition.put("phone", isvInfo.getPhone());
+		condition.put("is_deleted", 0);
+		condition.put("status", 0);
+		int count = isvInfoService.count(Wrappers.<IsvInfo>query().allEq(condition));
+
+		if (count > 0) {
+			throw new IllegalStateException("phone已经存在");
+		}
 
 		isvInfoService.save(fillData(isvInfo));
 
@@ -90,6 +111,49 @@ public class IsvInfoExServiceImpl{
 		}
 
 		return t;
+	}
+
+	/**
+	 * 更新isv
+	 * 如果isv的email或者phone字段有更新，则需要同步更新user表
+	 * 否则只需要更新isvinfo
+	 *
+	 * @param isvInfoVO
+	 * @return
+	 */
+	public boolean update(IsvInfoVO isvInfoVO) {
+		IsvInfo isvInfo = BeanUtil.copyWithConvert(isvInfoVO, IsvInfo.class);
+		Long userId = isvInfoVO.getUserId();
+		if (userId == null) {
+			throw new IllegalArgumentException("error to update, becaues it's userId is null");
+		}
+		//需要更新user表的email
+		if (StringUtils.isNotBlank(isvInfo.getEmail()) || StringUtils.isNotBlank(isvInfo.getPhone())) {
+
+			R<User> userById = userExClient.getUserById(userId);
+			if (userById.isSuccess()) {
+				User user = userById.getData();
+
+				if (StringUtils.isNotBlank(isvInfo.getEmail())) {
+					user.setEmail(isvInfo.getEmail());
+				}
+				//轻量级tp中没有account和password的概念，默认使用phone字段，既当account又当password
+				//更新的时候把账户和密码也更新掉
+				if (StringUtils.isNotBlank(isvInfo.getPhone())) {
+					user.setAccount(isvInfo.getPhone());
+					user.setPassword(isvInfo.getPhone());
+				}
+				user.setUpdateTime(DateTimeUtil.toDate(LocalDateTime.now()));
+				userExClient.update(user);
+			} else {
+				return false;
+			}
+		}
+
+		isvInfoService.updateById(isvInfo);
+
+		return true;
+
 	}
 
 }

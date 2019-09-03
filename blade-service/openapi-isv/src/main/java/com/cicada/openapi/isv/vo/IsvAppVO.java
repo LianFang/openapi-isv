@@ -35,29 +35,17 @@ import java.time.LocalDateTime;
 @EqualsAndHashCode()
 @ApiModel(value = "IsvAppVO对象")
 public class IsvAppVO implements Serializable {
-	private static final long serialVersionUID = 1L;
-
 	private Long id;
 
 	/**
-	 * 应用client表的id
-	 */
-	@ApiModelProperty(value = "应用client表的id")
-	private Long clientId;
-	/**
 	 * 应用名称
 	 */
-	@ApiModelProperty(value = "应用名称", required = true)
+	@ApiModelProperty(value = "应用名称。创建时必填项，其他选填")
 	private String name;
-	/**
-	 * 应用描述
-	 */
-	@ApiModelProperty(value = "应用描述")
-	private String remark;
 	/**
 	 * 属于哪个isv
 	 */
-	@ApiModelProperty(value = "属于哪个isv", required = true)
+	@ApiModelProperty(value = "属于哪个isv,创建时必填，修改时选填")
 	private Long isvUserId;
 
 
@@ -65,13 +53,25 @@ public class IsvAppVO implements Serializable {
 	 * 客户端id，client表的clientId字段
 	 * 注意与上边的clientId区别
 	 */
-	@ApiModelProperty(value = "客户端id", required = true)
-	private String clientKey;
+	@ApiModelProperty(value = "客户端id。创建时必填项，其他选填")
+	private String appId;
 	/**
 	 * 客户端密钥
 	 */
-	@ApiModelProperty(value = "客户端密钥", required = true)
-	private String clientSecret;
+	@ApiModelProperty(value = "客户端密钥。创建时必填项，其他选填")
+	private String appSecret;
+
+	/**
+	 * 应用client表的id
+	 */
+	@ApiModelProperty(value = "clientId，修改时必填项，其他选填")
+	private Long cId;
+
+	/**
+	 * 应用描述
+	 */
+	@ApiModelProperty(value = "应用描述")
+	private String remark;
 	/**
 	 * 资源集合
 	 */

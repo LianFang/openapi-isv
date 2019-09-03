@@ -5,7 +5,7 @@
     <!-- 通用查询映射结果 -->
     <resultMap id="isvAppResultMap" type="com.cicada.openapi.isv.entity.IsvApp">
         <id column="id" property="id"/>
-        <result column="client_id" property="clientId"/>
+        <result column="c_id" property="cId"/>
         <result column="name" property="name"/>
         <result column="remark" property="remark"/>
         <result column="isv_user_id" property="isvUserId"/>
@@ -15,6 +15,8 @@
         <result column="update_time" property="updateTime"/>
         <result column="status" property="status"/>
         <result column="is_deleted" property="isDeleted"/>
+        <result column="appId" property="appId"/>
+        <result column="appSecret" property="appSecret"/>
     </resultMap>
 
 

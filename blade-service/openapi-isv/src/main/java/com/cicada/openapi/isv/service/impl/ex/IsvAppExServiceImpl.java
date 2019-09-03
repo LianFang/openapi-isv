@@ -6,6 +6,7 @@ import com.cicada.openapi.isv.entity.IsvInfo;
 import com.cicada.openapi.isv.service.IIsvAppService;
 import com.cicada.openapi.isv.service.IIsvInfoService;
 import com.cicada.openapi.isv.vo.IsvAppVO;
+import com.google.common.collect.Maps;
 import org.springblade.core.secure.utils.SecureUtil;
 import org.springblade.core.tool.api.R;
 import org.springblade.core.tool.utils.BeanUtil;
@@ -16,6 +17,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Map;
 
 /**
  * @version 1.0
@@ -37,14 +39,8 @@ public class IsvAppExServiceImpl {
 	public boolean create(IsvAppVO isvAppVO) {
 		IsvApp isvApp = BeanUtil.copyWithConvert(isvAppVO, IsvApp.class);
 		AuthClient clientApp = BeanUtil.copyWithConvert(isvAppVO, AuthClient.class);
-		/**
-		 * 在isvapp表中有clientId字段表示client表中的主键
-		 * 而在client表中也存在clientId字段，表示的是应用的
-		 * 名称。这点特殊情况需要特殊处理。
-		 *
-		 */
-		//处理clientkey，使之成为clientId
-		clientApp.setClientId(isvAppVO.getClientKey());
+		clientApp.setClientId(isvAppVO.getAppId());
+		clientApp.setClientSecret(isvAppVO.getAppSecret());
 		R<AuthClient> authClientR = authClient.create(clientApp);
 
 		if(!authClientR.isSuccess()){
@@ -53,9 +49,13 @@ public class IsvAppExServiceImpl {
 
 		AuthClient data = authClientR.getData();
 
-		isvApp.setClientId(data.getId());
+		isvApp.setCId(data.getId());
+		Map<String, Object> condition = Maps.newHashMap();
+		condition.put("user_id", isvApp.getIsvUserId().longValue());
+		condition.put("is_deleted", 0);
+		condition.put("status", 0);
 
-		int count = isvInfoService.count(Wrappers.<IsvInfo>query().eq("user_id", isvApp.getIsvUserId().longValue()));
+		int count = isvInfoService.count(Wrappers.<IsvInfo>query().allEq(condition));
 
 		if (count < 1) {
 			throw new IllegalArgumentException("isv user_id is invalid: " + isvApp.getIsvUserId().longValue());
@@ -75,5 +75,15 @@ public class IsvAppExServiceImpl {
 		isvApp.setCreateTime(LocalDateTime.now());
 
 		return isvApp;
+	}
+
+	private boolean delete(String ids) {
+		return false;
+	}
+
+	private boolean update(IsvApp isvApp) {
+
+
+		return false;
 	}
 }

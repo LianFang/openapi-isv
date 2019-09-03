@@ -19,6 +19,7 @@ package com.cicada.openapi.isv.controller;
 import com.baomidou.mybatisplus.core.metadata.IPage;
 import com.cicada.openapi.isv.entity.IsvApp;
 import com.cicada.openapi.isv.service.IIsvAppService;
+import com.cicada.openapi.isv.service.impl.ex.IsvAppExServiceImpl;
 import com.cicada.openapi.isv.vo.IsvAppVO;
 import com.cicada.openapi.isv.wrapper.IsvAppWrapper;
 import io.swagger.annotations.Api;
@@ -44,17 +45,19 @@ import javax.validation.Valid;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/isvapp")
-@Api(value = "isv应用api", tags = "isv和client关系表，原始设计中client是由用户创建的，开放平台中扩展为isv可以创建app，而app即client，app创建成功以后会在 该表中保存对应关系接口")
+@Api(value = "应用管理", tags = "应用管理")
 public class IsvAppController extends BladeController {
 
 	private IIsvAppService isvAppService;
+	private IsvAppExServiceImpl isvAppExService;
 
 	/**
 	* 详情
 	*/
+	@ApiIgnore
 	@GetMapping("/detail")
-    @ApiOperationSupport(order = 1)
-	@ApiOperation(value = "详情", notes = "传入isvApp")
+	@ApiOperationSupport(order = 1)
+	@ApiOperation(value = "查询详情")
 	public R<IsvAppVO> detail(IsvApp isvApp) {
 		IsvApp detail = isvAppService.getOne(Condition.getQueryWrapper(isvApp));
 		return R.data(IsvAppWrapper.build().entityVO(detail));
@@ -66,8 +69,22 @@ public class IsvAppController extends BladeController {
 	*/
 	@GetMapping("/list")
     @ApiOperationSupport(order = 2)
-	@ApiOperation(value = "分页", notes = "传入isvApp")
-	public R<IPage<IsvAppVO>> list(IsvApp isvApp, Query query) {
+	@ApiOperation(value = "获取应用列表分页")
+	public R<IPage<IsvAppVO>> list(@ApiParam("应用名称") @RequestParam(required = false) String name,
+								   @ApiParam("应用id") @RequestParam(required = false) String appId,
+								   @ApiParam("isv的userId") @RequestParam(required = false) Long isvUserId,
+								   Query query) {
+		IsvApp isvApp = new IsvApp();
+		if (name != null) {
+			isvApp.setName(name);
+		}
+		if (appId != null) {
+			isvApp.setAppId(appId);
+		}
+		if (isvUserId != null) {
+			isvApp.setIsvUserId(isvUserId);
+		}
+
 		IPage<IsvApp> pages = isvAppService.page(Condition.getPage(query), Condition.getQueryWrapper(isvApp));
 		return R.data(IsvAppWrapper.build().pageVO(pages));
 	}
@@ -77,7 +94,6 @@ public class IsvAppController extends BladeController {
 该表中保存对应关系
 	*/
 	@GetMapping("/page")
-	@ApiIgnore
     @ApiOperationSupport(order = 3)
 	@ApiOperation(value = "分页", notes = "传入isvApp")
 	public R<IPage<IsvAppVO>> page(IsvAppVO isvApp, Query query) {
@@ -102,9 +118,8 @@ public class IsvAppController extends BladeController {
 该表中保存对应关系
 	*/
 	@PostMapping("/update")
-	@ApiIgnore
     @ApiOperationSupport(order = 5)
-	@ApiOperation(value = "修改", notes = "传入isvApp")
+	@ApiOperation(value = "修改应用")
 	public R update(@Valid @RequestBody IsvApp isvApp) {
 		return R.status(isvAppService.updateById(isvApp));
 	}
@@ -127,11 +142,30 @@ public class IsvAppController extends BladeController {
 该表中保存对应关系
 	*/
 	@PostMapping("/remove")
+	@ApiOperationSupport(order = 8)
 	@ApiIgnore
-    @ApiOperationSupport(order = 8)
 	@ApiOperation(value = "删除", notes = "传入ids")
 	public R remove(@ApiParam(value = "主键集合", required = true) @RequestParam String ids) {
 		return R.status(isvAppService.removeByIds(Func.toLongList(ids)));
+	}
+
+	/**
+	 * 删除 isv和client关系表，原始设计中client是由用户创建的，开放平台中扩展为isv可以创建app，而app即client，app创建成功以后会在
+	 * 该表中保存对应关系
+	 */
+	@PostMapping("/delete")
+	@ApiOperationSupport(order = 8)
+	@ApiOperation(value = "删除应用", notes = "支持批量和单个删除，批量传入ids")
+	public R delete(@ApiParam(value = "支持批量和单个删除，如果有多个id，把id拼接起来中间使用逗号，即','隔开", required = true) @RequestParam String ids) {
+		return R.status(isvAppService.removeByIds(Func.toLongList(ids)));
+	}
+
+
+	@PostMapping("/create")
+	@ApiOperationSupport(order = 1)
+	@ApiOperation(value = "创建应用")
+	public R create(@Valid @RequestBody IsvAppVO isvAppVO) {
+		return R.status(isvAppExService.create(isvAppVO));
 	}
 
 

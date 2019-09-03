@@ -46,6 +46,7 @@ import javax.validation.Valid;
 @RestController
 @AllArgsConstructor
 @RequestMapping("/isvinfo")
+@ApiIgnore
 @Api(value = "isv基础api", tags = "isv信息表，每个isv创建都会在先在user表里面生成该isv的登陆信息，然后在该表生成isv的额外信息。 该表和user表是一一对应的接口")
 public class IsvInfoController extends BladeController {
 
@@ -68,6 +69,7 @@ public class IsvInfoController extends BladeController {
 该表和user表是一一对应的
 	*/
 	@GetMapping("/list")
+	@ApiIgnore
     @ApiOperationSupport(order = 2)
 	@ApiOperation(value = "分页", notes = "传入isvInfo")
 	public R<IPage<IsvInfoVO>> list(IsvInfo isvInfo, Query query) {

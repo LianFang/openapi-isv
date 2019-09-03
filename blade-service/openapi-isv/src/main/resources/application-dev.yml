@@ -8,10 +8,3 @@ spring:
     url: ${blade.datasource.dev.url}
     username: ${blade.datasource.dev.username}
     password: ${blade.datasource.dev.password}
-
-
-logging:
-  level:
-    ROOT: debug
-
-

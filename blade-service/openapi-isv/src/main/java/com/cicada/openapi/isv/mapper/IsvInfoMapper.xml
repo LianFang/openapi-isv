@@ -17,6 +17,8 @@
         <result column="update_time" property="updateTime"/>
         <result column="status" property="status"/>
         <result column="is_deleted" property="isDeleted"/>
+        <result column="isvNo" property="isvNo"/>
+        <result column="email" property="email"/>
     </resultMap>
 
 

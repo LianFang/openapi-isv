@@ -16,8 +16,7 @@
  */
 package com.cicada.openapi.isv.entity;
 
-import com.baomidou.mybatisplus.annotation.IdType;
-import com.baomidou.mybatisplus.annotation.TableId;
+import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -31,7 +30,7 @@ import java.time.LocalDateTime;
 该表和user表是一一对应的实体类
  *
  * @author BladeX
- * @since 2019-08-15
+ * @since 2019-09-02
  */
 @Data
 @TableName("t_isv_info")
@@ -44,10 +43,6 @@ public class IsvInfo implements Serializable {
 	* 主键
 	*/
 		@ApiModelProperty(value = "主键")
-		@TableId(
-			value = "id",
-			type = IdType.ID_WORKER
-		)
 		private Long id;
 	/**
 	* 用户id，关联到blade_user表中
@@ -85,6 +80,17 @@ public class IsvInfo implements Serializable {
 	private LocalDateTime updateTime;
 	private Integer status;
 	private Integer isDeleted;
+	/**
+	 * isv编号
+	 */
+	@ApiModelProperty(value = "isv编号")
+	@TableField("isvNo")
+	private String isvNo;
+	/**
+	 * isv联系邮箱
+	 */
+	@ApiModelProperty(value = "isv联系邮箱")
+	private String email;
 
 
 }
