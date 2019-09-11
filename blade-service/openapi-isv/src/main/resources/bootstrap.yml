@@ -1,0 +1,7 @@
+logback:
+  #log 的存放路径
+  logdir: logs
+  #log 的文件名称的前缀部分。最后会拼接成isv-info-2020-09-10.log
+  appname: isv
+
+

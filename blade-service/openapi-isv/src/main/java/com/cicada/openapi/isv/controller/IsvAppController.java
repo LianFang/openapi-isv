@@ -70,23 +70,12 @@ public class IsvAppController extends BladeController {
 	@GetMapping("/list")
     @ApiOperationSupport(order = 2)
 	@ApiOperation(value = "获取应用列表分页")
-	public R<IPage<IsvAppVO>> list(@ApiParam("应用名称") @RequestParam(required = false) String name,
-								   @ApiParam("应用id") @RequestParam(required = false) String appId,
-								   @ApiParam("isv的userId") @RequestParam(required = false) Long isvUserId,
+	public R<IPage<IsvAppVO>> list(IsvApp isvApp,
 								   Query query) {
-		IsvApp isvApp = new IsvApp();
-		if (name != null) {
-			isvApp.setName(name);
-		}
-		if (appId != null) {
-			isvApp.setAppId(appId);
-		}
-		if (isvUserId != null) {
-			isvApp.setIsvUserId(isvUserId);
-		}
 
 		IPage<IsvApp> pages = isvAppService.page(Condition.getPage(query), Condition.getQueryWrapper(isvApp));
-		return R.data(IsvAppWrapper.build().pageVO(pages));
+		R<IPage<IsvAppVO>> data = R.data(IsvAppWrapper.build().pageVO(pages));
+		return data;
 	}
 
 	/**

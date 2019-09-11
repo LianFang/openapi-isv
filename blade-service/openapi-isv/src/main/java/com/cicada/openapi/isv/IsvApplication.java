@@ -16,6 +16,7 @@
  */
 package com.cicada.openapi.isv;
 
+import com.alibaba.dubbo.config.spring.context.annotation.EnableDubbo;
 import org.springblade.core.cloud.feign.EnableBladeFeign;
 import org.springblade.core.launch.BladeApplication;
 import org.springframework.cloud.client.SpringCloudApplication;
@@ -27,6 +28,7 @@ import org.springframework.cloud.client.SpringCloudApplication;
  */
 @EnableBladeFeign("com.cicada")
 @SpringCloudApplication
+@EnableDubbo(scanBasePackages = "com.cicada")
 public class IsvApplication {
 
 	public static void main(String[] args) {

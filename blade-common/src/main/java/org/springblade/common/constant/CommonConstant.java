@@ -30,17 +30,31 @@ public interface CommonConstant {
 	/**
 	 * nacos dev 地址
 	 */
-	String NACOS_DEV_ADDR = "127.0.0.1:8848";
+	String NACOS_DEV_ADDR = "172.20.11.231:8848";
 
 	/**
 	 * nacos prod 地址
 	 */
-	String NACOS_PROD_ADDR = "172.30.0.48:8848";
+	String NACOS_PROD_ADDR = "172.20.11.231:8848";
 
 	/**
 	 * nacos test 地址
 	 */
-	String NACOS_TEST_ADDR = "172.30.0.48:8848";
+	String NACOS_TEST_ADDR = "172.20.11.231:8848";
+	/**
+	 * zk dev 地址
+	 */
+	String ZK_DEV_ADDR = "172.20.11.222:2181";
+
+	/**
+	 * zk prod 地址
+	 */
+	String ZK_PROD_ADDR = "172.20.11.222:2181";
+
+	/**
+	 * zk test 地址
+	 */
+	String ZK_TEST_ADDR = "172.20.11.222:2181";
 
 	/**
 	 * sentinel dev 地址
@@ -109,6 +123,17 @@ public interface CommonConstant {
 				return NACOS_TEST_ADDR;
 			default:
 				return NACOS_DEV_ADDR;
+		}
+	}
+
+	static String zkAddr(String profile) {
+		switch (profile) {
+			case (AppConstant.PROD_CODE):
+				return ZK_PROD_ADDR;
+			case (AppConstant.TEST_CODE):
+				return ZK_TEST_ADDR;
+			default:
+				return ZK_DEV_ADDR;
 		}
 	}
 

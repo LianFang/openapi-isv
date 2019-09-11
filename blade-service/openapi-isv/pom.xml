@@ -62,6 +62,72 @@
             <version>${bladex.system-api.version}</version>
         </dependency>
 
+        <dependency>
+            <groupId>cn.thinkjoy.uc</groupId>
+            <artifactId>uc-api</artifactId>
+            <version>0.9.61-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>cn.thinkjoy.common</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>cn.thinkjoy.cloudstack</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>cn.thinkjoy.dataInsight</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>cn.thinkjoy.image</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>cn.thinkjoy.message</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+                <exclusion>
+                    <groupId>cn.thinkjoy.yucai</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+        <dependency>
+            <groupId>cn.thinkjoy.common</groupId>
+            <artifactId>thinkjoy-protocol-common</artifactId>
+            <version>0.1.40-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.thinkjoy.common</groupId>
+            <artifactId>thinkjoy-domain-common</artifactId>
+            <version>0.1.40-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>cn.thinkjoy.common</groupId>
+            <artifactId>thinkjoy-context-common</artifactId>
+            <version>0.1.40-SNAPSHOT</version>
+        </dependency>
+        <dependency>
+            <groupId>org.apache.zookeeper</groupId>
+            <artifactId>zookeeper</artifactId>
+            <version>3.4.5</version>
+            <type>pom</type>
+        </dependency>
+
+
+        <dependency>
+            <groupId>com.alibaba.spring.boot</groupId>
+            <artifactId>dubbo-spring-boot-starter</artifactId>
+            <version>2.0.0</version>
+        </dependency>
+
+        <dependency>
+            <groupId>org.apache.zookeeper</groupId>
+            <artifactId>zookeeper</artifactId>
+            <version>3.4.5</version>
+        </dependency>
+
     </dependencies>
 
 

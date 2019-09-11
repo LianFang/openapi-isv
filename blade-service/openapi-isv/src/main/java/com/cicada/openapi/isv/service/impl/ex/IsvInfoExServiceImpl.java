@@ -1,5 +1,7 @@
 package com.cicada.openapi.isv.service.impl.ex;
 
+import cn.thinkjoy.uc.service.business.IUserService;
+import com.alibaba.dubbo.config.annotation.Reference;
 import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.cicada.openapi.isv.entity.IsvInfo;
 import com.cicada.openapi.isv.service.IIsvInfoService;
@@ -34,6 +36,8 @@ public class IsvInfoExServiceImpl{
 //	private IRoleClient roleClient;
 	@Autowired
 	private IUserExClient userExClient;
+	@Reference
+	private IUserService ucUserService;
 
 
 	/**
@@ -42,6 +46,9 @@ public class IsvInfoExServiceImpl{
 	 */
 	public boolean create(IsvInfoVO isvInfoVO){
 
+		Map<String, Object> register = ucUserService.register("15129937567", "123456", "edu", "a1b2c3", "男");
+
+		register.keySet().stream().forEach(System.out::println);
 		User user = BeanUtil.copyWithConvert(isvInfoVO, User.class);
 		IsvInfo isvInfo = BeanUtil.copyWithConvert(isvInfoVO, IsvInfo.class);
 

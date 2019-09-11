@@ -18,7 +18,6 @@ package org.springblade.common.launch;
 
 import org.springblade.common.constant.CommonConstant;
 import org.springblade.core.auto.service.AutoService;
-import org.springblade.core.launch.constant.AppConstant;
 import org.springblade.core.launch.service.LauncherService;
 import org.springblade.core.launch.utils.PropsUtil;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -44,9 +43,7 @@ public class LauncherServiceImpl implements LauncherService {
 		PropsUtil.setProperty(props, "dubbo.application.name", appName);
 		PropsUtil.setProperty(props, "dubbo.application.qos.enable", "false");
 		PropsUtil.setProperty(props, "dubbo.protocol.name", "dubbo");
-		PropsUtil.setProperty(props, "dubbo.registry.address", "nacos://" + CommonConstant.nacosAddr(profile));
-		PropsUtil.setProperty(props, "dubbo.version", AppConstant.APPLICATION_VERSION);
-		PropsUtil.setProperty(props, "dubbo.scan.base-packages", AppConstant.BASE_PACKAGES);
+		PropsUtil.setProperty(props, "dubbo.registry.address", "zookeeper://" + CommonConstant.zkAddr(profile));
 	}
 
 }
