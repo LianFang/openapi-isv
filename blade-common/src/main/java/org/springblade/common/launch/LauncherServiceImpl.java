@@ -18,6 +18,7 @@ package org.springblade.common.launch;
 
 import org.springblade.common.constant.CommonConstant;
 import org.springblade.core.auto.service.AutoService;
+import org.springblade.core.launch.constant.NacosConstant;
 import org.springblade.core.launch.service.LauncherService;
 import org.springblade.core.launch.utils.PropsUtil;
 import org.springframework.boot.builder.SpringApplicationBuilder;
@@ -44,6 +45,9 @@ public class LauncherServiceImpl implements LauncherService {
 		PropsUtil.setProperty(props, "dubbo.application.qos.enable", "false");
 		PropsUtil.setProperty(props, "dubbo.protocol.name", "dubbo");
 		PropsUtil.setProperty(props, "dubbo.registry.address", "zookeeper://" + CommonConstant.zkAddr(profile));
+
+		props.setProperty("spring.cloud.nacos.config.prefix", appName);
+		props.setProperty("spring.cloud.nacos.config.file-extension", NacosConstant.NACOS_CONFIG_FORMAT);
 	}
 
 }

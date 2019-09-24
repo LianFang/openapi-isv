@@ -13,16 +13,16 @@ import org.springframework.boot.context.properties.ConfigurationProperties;
 @Data
 @ConfigurationProperties(prefix = "isv")
 public class IsvProperties {
-	private long defaultUserId = 100002599L;
+	private long defaultUserId;
 	/**
 	 * 数据中心id
 	 */
-	private long dcId = 1L;
+	private long dcId;
 	/**
 	 * 机器id
 	 * <p>
 	 * <p>
 	 * 注意，相同服务，mId不能相同
 	 */
-	private long mId = 1L;
+	private long mId;
 }
