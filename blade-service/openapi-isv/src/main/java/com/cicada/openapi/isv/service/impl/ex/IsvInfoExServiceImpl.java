@@ -69,20 +69,19 @@ public class IsvInfoExServiceImpl{
 	public boolean create(IsvInfoVO isvInfoVO){
 
 		User user = BeanUtil.copyWithConvert(isvInfoVO, User.class);
-		user.setAccount(isvInfoVO.getPhone());
 		String password = SmsCodeUtil.generateNumCode(6);
+		user.setAccount(isvInfoVO.getPhone());
 		user.setPassword(password);
+		user.setRealName(user.getName());
 		IsvInfo isvInfo = BeanUtil.copyWithConvert(isvInfoVO, IsvInfo.class);
 
-		//isv管理暂时没有account和password的概念，默认使用phone字段，既当account又当password
 		Map<String, Object> condition = Maps.newHashMap();
 		condition.put("phone", isvInfo.getPhone());
-		condition.put("is_deleted", 0);
-		int count = isvInfoService.count(Wrappers.<IsvInfo>query().allEq(condition));
+		conditionVerify(condition, "phone");
+		condition.clear();
+		condition.put("name", isvInfo.getName());
+		conditionVerify(condition, "isv name");
 
-		if (count > 0) {
-			throw new IllegalStateException("phone已经存在");
-		}
 		long userIdByPhone = ucUserService.getUserIdByPhone(isvInfo.getPhone());
 		if (userIdByPhone > 0) {
 			throw new IllegalStateException("phone已经存在");
@@ -93,8 +92,8 @@ public class IsvInfoExServiceImpl{
 		saveAgent(isvInfo, isvNo, password);
 
 		Role roleData = saveRole(user);
-
 		user.setRoleId(String.valueOf(roleData.getId().longValue()));
+
 		User userData = saveUser(user);
 
 		isvInfo.setUserId(userData.getId());
@@ -105,9 +104,16 @@ public class IsvInfoExServiceImpl{
 		return true;
 	}
 
+	private void conditionVerify(Map<String, Object> condition, String conditionTag) {
+		condition.put("is_deleted", 0);
+		int count = isvInfoService.count(Wrappers.<IsvInfo>query().allEq(condition));
+		if (count > 0) {
+			throw new IllegalStateException(conditionTag + "已经存在");
+		}
+	}
+
 	private User saveUser(User user) {
 		User fill = fillData(user);
-		user.setRealName(user.getName());
 		R<User> userR = userExClient.create(fill);
 		if (!userR.isSuccess()) {
 			throw new IllegalStateException("error create user: " + userR.getMsg());
