@@ -16,10 +16,13 @@
  */
 package com.cicada.openapi.isv.vo;
 
-import com.cicada.openapi.isv.entity.IsvInfo;
 import io.swagger.annotations.ApiModel;
+import io.swagger.annotations.ApiModelProperty;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
+
+import java.io.Serializable;
+import java.util.Date;
 
 /**
  * isv信息表，每个isv创建都会在先在user表里面生成该isv的登陆信息，然后在该表生成isv的额外信息。
@@ -29,9 +32,88 @@ import lombok.EqualsAndHashCode;
  * @since 2019-08-15
  */
 @Data
-@EqualsAndHashCode(callSuper = true)
-@ApiModel(value = "IsvInfoVO对象", description = "isv信息表，每个isv创建都会在先在user表里面生成该isv的登陆信息，然后在该表生成isv的额外信息。 该表和user表是一一对应的")
-public class IsvInfoVO extends IsvInfo {
+@EqualsAndHashCode
+@ApiModel(value = "IsvVO对象", description = "isv信息登记表")
+public class IsvInfoVO implements Serializable {
 	private static final long serialVersionUID = 1L;
+
+	private Long id;
+
+	@ApiModelProperty(value = "isv的UserId,创建时不需要填，修改时必须填")
+	private Long userId;
+
+	@ApiModelProperty(value = "isv的联系人", required = true)
+	private String contact;
+	/**
+	 * isv的联系电话
+	 */
+	@ApiModelProperty(value = "isv的联系人电话联系电话", required = true)
+	private String phone;
+	/**
+	 * isv名称，公司名称
+	 */
+	@ApiModelProperty(value = "isv名称，公司名称", required = true)
+	private String name;
+	/**
+	 * 营业执照扫副本描件，url
+	 */
+	@ApiModelProperty(value = "营业执照扫副本描件，url", required = true)
+	private String businessLicense;
+	/**
+	 * isv地址
+	 */
+	@ApiModelProperty(value = "isv地址", required = true)
+	private String address;
+
+	@ApiModelProperty(value = "isv账号，在换取token时使用，以后也会在公网开放")
+	private String account;
+	@ApiModelProperty(value = "isv密码，在换取token时使用，以后也会在公网开放")
+	private String password;
+	@ApiModelProperty(value = "isv联系人头像")
+	private String avatar;
+	@ApiModelProperty(value = "isv邮箱", required = true)
+	private String email;
+	@ApiModelProperty(value = "isv联系人出生年月")
+	private Date birthday;
+	@ApiModelProperty(value = "isv联系人性别,1:男,0:女,默认男")
+	private Integer sex = 1;
+
+	/**
+	 * isv编号
+	 */
+	@ApiModelProperty(value = "isv编号")
+	private String isvNo;
+
+	private String provinceCode;
+	private String provinceName;
+
+	private String cityCode;
+	private String cityName;
+
+	private String districtCode;
+	private String districtName;
+
+	/**
+	 * 简介
+	 */
+	@ApiModelProperty(value = "简介")
+	private String remark;
+	/**
+	 * 法人身份证副本
+	 */
+	@ApiModelProperty(value = "法人身份证副本")
+	private String corporation;
+	/**
+	 * 是否被黑名单，0正常，1被黑名单。不能使用clientId clientSecret
+	 */
+	@ApiModelProperty(value = "是否被黑名单，0正常，1被黑名单。不能使用clientId clientSecret")
+	private Integer isBlocked;
+	/**
+	 * 是否被禁用，0正常，1禁用。不能使用clientId clientSecret
+	 */
+	@ApiModelProperty(value = "是否被禁用，0正常，1禁用。不能使用clientId clientSecret")
+	private Integer isForbidden;
+
+
 
 }

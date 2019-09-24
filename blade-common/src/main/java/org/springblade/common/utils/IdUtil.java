@@ -3,14 +3,14 @@ package org.springblade.common.utils;
 /**
  * id生成器，使用snowflake算法
  * 其中datacentId使用固定值1
- * machineId使用注册中心instance
+ * machineId也使用固定值1
  *
  * @version 1.0
  * @author：xy
  * @createTime：2019-09-09
  */
 
-public class SnowFlake {
+public class IdUtil {
 	/**
 	 * 起始的时间戳
 	 */
@@ -42,7 +42,7 @@ public class SnowFlake {
 	private long sequence = 0L; //序列号
 	private long lastStmp = -1L;//上一次时间戳
 
-	public SnowFlake(long datacenterId, long machineId) {
+	public IdUtil(long datacenterId, long machineId) {
 		if (datacenterId > MAX_DATACENTER_NUM || datacenterId < 0) {
 			throw new IllegalArgumentException("datacenterId can't be greater than MAX_DATACENTER_NUM or less than 0");
 		}
@@ -54,7 +54,7 @@ public class SnowFlake {
 	}
 
 	public static void main(String[] args) {
-		SnowFlake snowFlake = new SnowFlake(2, 3);
+		IdUtil snowFlake = new IdUtil(2, 3);
 
 		for (int i = 0; i < (1 << 12); i++) {
 			System.out.println(snowFlake.nextId());

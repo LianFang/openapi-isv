@@ -26,7 +26,6 @@ import static org.springblade.core.launch.constant.AppConstant.APPLICATION_NAME_
  * @author Chill
  */
 public interface CommonConstant {
-
 	/**
 	 * nacos dev 地址
 	 */
@@ -35,41 +34,42 @@ public interface CommonConstant {
 	/**
 	 * nacos prod 地址
 	 */
-	String NACOS_PROD_ADDR = "172.20.11.231:8848";
+	String NACOS_PROD_ADDR = "172.20.11.228:8848";
 
 	/**
 	 * nacos test 地址
 	 */
-	String NACOS_TEST_ADDR = "172.20.11.231:8848";
+	String NACOS_TEST_ADDR = "172.20.11.228:8848";
 	/**
-	 * zk dev 地址
+	 * zk uc dev 地址
 	 */
-	String ZK_DEV_ADDR = "172.20.11.222:2181";
+	String ZK_DEV_ADDR = "172.31.1.28:2181";
 
 	/**
-	 * zk prod 地址
+	 * zk uc prod 地址
 	 */
-	String ZK_PROD_ADDR = "172.20.11.222:2181";
+	String ZK_PROD_ADDR = "172.20.6.139:2181";
 
 	/**
-	 * zk test 地址
+	 * zk uc test 地址
 	 */
-	String ZK_TEST_ADDR = "172.20.11.222:2181";
+	String ZK_TEST_ADDR = "172.21.104.8:2181";
+
 
 	/**
 	 * sentinel dev 地址
 	 */
-	String SENTINEL_DEV_ADDR = "127.0.0.1:8858";
+	String SENTINEL_DEV_ADDR = "172.20.11.231:8858";
 
 	/**
 	 * sentinel prod 地址
 	 */
-	String SENTINEL_PROD_ADDR = "172.30.0.58:8858";
+	String SENTINEL_PROD_ADDR = "172.20.11.228:8858";
 
 	/**
 	 * sentinel test 地址
 	 */
-	String SENTINEL_TEST_ADDR = "172.30.0.58:8858";
+	String SENTINEL_TEST_ADDR = "172.20.11.228:8858";
 
 	/**
 	 * sword 系统名

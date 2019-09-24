@@ -17,8 +17,18 @@
         <result column="update_time" property="updateTime"/>
         <result column="status" property="status"/>
         <result column="is_deleted" property="isDeleted"/>
-        <result column="isvNo" property="isvNo"/>
+        <result column="isv_no" property="isvNo"/>
         <result column="email" property="email"/>
+        <result column="province_name" property="provinceName"/>
+        <result column="province_code" property="provinceCode"/>
+        <result column="city_name" property="cityName"/>
+        <result column="city_code" property="cityCode"/>
+        <result column="district_name" property="districtName"/>
+        <result column="district_code" property="districtCode"/>
+        <result column="remark" property="remark"/>
+        <result column="corporation" property="corporation"/>
+        <result column="is_blocked" property="isBlocked"/>
+        <result column="is_forbidden" property="isForbidden"/>
     </resultMap>
 
 

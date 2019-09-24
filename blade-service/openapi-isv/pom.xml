@@ -65,33 +65,13 @@
         <dependency>
             <groupId>cn.thinkjoy.uc</groupId>
             <artifactId>uc-api</artifactId>
-            <version>0.9.61-SNAPSHOT</version>
             <exclusions>
                 <exclusion>
-                    <groupId>cn.thinkjoy.common</groupId>
-                    <artifactId>*</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>cn.thinkjoy.cloudstack</groupId>
-                    <artifactId>*</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>cn.thinkjoy.dataInsight</groupId>
-                    <artifactId>*</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>cn.thinkjoy.image</groupId>
-                    <artifactId>*</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>cn.thinkjoy.message</groupId>
-                    <artifactId>*</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>cn.thinkjoy.yucai</groupId>
-                    <artifactId>*</artifactId>
+                    <artifactId>cn.thinkjoy.boss</artifactId>
+                    <groupId>*</groupId>
                 </exclusion>
             </exclusions>
+            <version>0.9.108.14-SNAPSHOT</version>
         </dependency>
         <dependency>
             <groupId>cn.thinkjoy.common</groupId>
@@ -99,20 +79,38 @@
             <version>0.1.40-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>cn.thinkjoy.common</groupId>
-            <artifactId>thinkjoy-domain-common</artifactId>
-            <version>0.1.40-SNAPSHOT</version>
+            <groupId>cn.thinkjoy.uc</groupId>
+            <artifactId>uc-domain</artifactId>
+            <version>0.9.108.14-SNAPSHOT</version>
+            <exclusions>
+                <exclusion>
+                    <groupId>io.swagger</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
         <dependency>
-            <groupId>cn.thinkjoy.common</groupId>
-            <artifactId>thinkjoy-context-common</artifactId>
-            <version>0.1.40-SNAPSHOT</version>
+            <groupId>com.101tec</groupId>
+            <artifactId>zkclient</artifactId>
+            <version>0.4</version>
+        </dependency>
+
+        <dependency>
+            <groupId>cn.thinkjoy.kidscare</groupId>
+            <artifactId>kidscare-api</artifactId>
+            <version>0.2.129.6-SNAPSHOT</version>
         </dependency>
         <dependency>
-            <groupId>org.apache.zookeeper</groupId>
-            <artifactId>zookeeper</artifactId>
-            <version>3.4.5</version>
-            <type>pom</type>
+            <groupId>cn.thinkjoy.kidscare</groupId>
+            <artifactId>kidscare-domain</artifactId>
+            <version>0.2.129.6-SNAPSHOT</version>
+        </dependency>
+
+
+        <dependency>
+            <groupId>cn.eduplus.bluewhale</groupId>
+            <artifactId>bluewhale-client</artifactId>
+            <version>1.0.74-SNAPSHOT</version>
         </dependency>
 
 
@@ -121,13 +119,6 @@
             <artifactId>dubbo-spring-boot-starter</artifactId>
             <version>2.0.0</version>
         </dependency>
-
-        <dependency>
-            <groupId>org.apache.zookeeper</groupId>
-            <artifactId>zookeeper</artifactId>
-            <version>3.4.5</version>
-        </dependency>
-
     </dependencies>
 
 

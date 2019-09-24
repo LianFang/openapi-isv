@@ -16,7 +16,6 @@
  */
 package com.cicada.openapi.isv.entity;
 
-import com.baomidou.mybatisplus.annotation.TableField;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -30,11 +29,11 @@ import java.time.LocalDateTime;
 该表和user表是一一对应的实体类
  *
  * @author BladeX
- * @since 2019-09-02
+ * @since 2019-09-20
  */
 @Data
 @TableName("t_isv_info")
-@ApiModel(value = "IsvInfo对象", description = "isv信息表，每个isv创建都会在先在user表里面生成该isv的登陆信息，然后在该表生成isv的额外信息。 该表和user表是一一对应的")
+@ApiModel(value = "IsvInfo对象", description = "isv信息表，每个isv创建都会在先在user表里面生成该isv的登陆信息，然后在该表生成isv的额外信息。该表和user表是一一对应的")
 public class IsvInfo implements Serializable {
 
 	private static final long serialVersionUID = 1L;
@@ -84,13 +83,38 @@ public class IsvInfo implements Serializable {
 	 * isv编号
 	 */
 	@ApiModelProperty(value = "isv编号")
-	@TableField("isvNo")
 	private String isvNo;
 	/**
 	 * isv联系邮箱
 	 */
 	@ApiModelProperty(value = "isv联系邮箱")
 	private String email;
+	private String provinceName;
+	private String provinceCode;
+	private String cityName;
+	private String cityCode;
+	private String districtName;
+	private String districtCode;
+	/**
+	 * 简介
+	 */
+	@ApiModelProperty(value = "简介")
+	private String remark;
+	/**
+	 * 法人身份证副本
+	 */
+	@ApiModelProperty(value = "法人身份证副本")
+	private String corporation;
+	/**
+	 * 是否被黑名单，0正常，1被黑名单。不能使用clientId clientSecret
+	 */
+	@ApiModelProperty(value = "是否被黑名单，0正常，1被黑名单。不能使用clientId clientSecret")
+	private Integer isBlocked;
+	/**
+	 * 是否被禁用，0正常，1禁用。不能使用clientId clientSecret
+	 */
+	@ApiModelProperty(value = "是否被禁用，0正常，1禁用。不能使用clientId clientSecret")
+	private Integer isForbidden;
 
 
 }

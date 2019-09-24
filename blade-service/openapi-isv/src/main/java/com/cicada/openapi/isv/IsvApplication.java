@@ -17,8 +17,10 @@
 package com.cicada.openapi.isv;
 
 import com.alibaba.dubbo.config.spring.context.annotation.EnableDubbo;
+import com.cicada.openapi.isv.config.IsvProperties;
 import org.springblade.core.cloud.feign.EnableBladeFeign;
 import org.springblade.core.launch.BladeApplication;
+import org.springframework.boot.context.properties.EnableConfigurationProperties;
 import org.springframework.cloud.client.SpringCloudApplication;
 
 /**
@@ -26,6 +28,8 @@ import org.springframework.cloud.client.SpringCloudApplication;
  *
  * @author Chill
  */
+@EnableConfigurationProperties(IsvProperties.class)
+
 @EnableBladeFeign("com.cicada")
 @SpringCloudApplication
 @EnableDubbo(scanBasePackages = "com.cicada")

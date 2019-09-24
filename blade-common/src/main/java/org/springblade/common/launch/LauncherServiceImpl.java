@@ -39,7 +39,7 @@ public class LauncherServiceImpl implements LauncherService {
 		PropsUtil.setProperty(props, "spring.cloud.nacos.discovery.server-addr", CommonConstant.nacosAddr(profile));
 		PropsUtil.setProperty(props, "spring.cloud.nacos.config.server-addr", CommonConstant.nacosAddr(profile));
 		PropsUtil.setProperty(props, "spring.cloud.sentinel.transport.dashboard", CommonConstant.sentinelAddr(profile));
-		// dubbo注册
+		// dubbo uc zk 注册
 		PropsUtil.setProperty(props, "dubbo.application.name", appName);
 		PropsUtil.setProperty(props, "dubbo.application.qos.enable", "false");
 		PropsUtil.setProperty(props, "dubbo.protocol.name", "dubbo");

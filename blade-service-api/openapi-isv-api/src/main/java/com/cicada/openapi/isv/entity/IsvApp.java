@@ -30,12 +30,15 @@ import java.time.LocalDateTime;
  该表中保存对应关系实体类
  *
  * @author BladeX
- * @since 2019-09-02
+ * @since 2019-09-20
  */
 @Data
 @TableName("t_isv_app")
-@ApiModel(value = "IsvApp对象", description = "isv和client关系表，原始设计中client是由用户创建的，开放平台中扩展为isv可以创建app，而app即client，app创建成功以后会在 该表中保存对应关系")
+@ApiModel(value = "IsvApp对象", description = "isv和client关系表，原始设计中client是由用户创建的，开放平台中扩展为isv可以创建app，而app即client，app创建成功以后会在该表中保存对应关系")
 public class IsvApp implements Serializable {
+
+	private static final long serialVersionUID = 1L;
+
 	private Long id;
 	/**
 	* 应用client表的id
