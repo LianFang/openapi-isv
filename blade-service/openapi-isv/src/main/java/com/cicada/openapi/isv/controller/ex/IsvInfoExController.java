@@ -20,6 +20,7 @@ import org.springblade.core.tool.api.R;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
+import java.util.List;
 
 /**
  * @version 1.0
@@ -81,6 +82,22 @@ public class IsvInfoExController extends BladeController {
 
 		IPage<IsvInfo> pages = isvInfoService.page(Condition.getPage(query), like);
 		return R.data(IsvInfoWrapper.build().pageVO(pages));
+	}
+
+	/**
+	 * 查询isv列表
+	 */
+	@GetMapping("/listAll")
+	@ApiOperationSupport(order = 2)
+	@ApiOperation(value = "查询isv列表")
+	public R<List<IsvInfoVO>> listAll(@ApiParam("isv名称") @RequestParam(required = false) String name) {
+		LambdaQueryWrapper<IsvInfo> wrapper = Wrappers.<IsvInfo>query().lambda();
+		if (name != null) {
+			wrapper.like(IsvInfo::getName, name);
+		}
+		wrapper.eq(IsvInfo::getIsDeleted, 0);
+		List<IsvInfo> isvInfoList = isvInfoService.list(wrapper);
+		return R.data(IsvInfoWrapper.build().listVO(isvInfoList));
 	}
 
 }

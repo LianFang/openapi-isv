@@ -1,6 +1,9 @@
 package com.cicada.openapi.isv.controller;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
 import com.cicada.openapi.isv.entity.IsvInfo;
 import com.cicada.openapi.isv.service.IIsvInfoService;
 import com.cicada.openapi.isv.vo.IsvInfoVO;
@@ -39,9 +42,17 @@ public class BlocklistController {
 	@ApiOperationSupport(order = 1)
 	@ApiOperation(value = "分页")
 	public R<IPage<IsvInfoVO>> page(IsvInfo isvInfo, Query query) {
-		isvInfo.setIsBlocked(1);
-		isvInfo.setIsDeleted(0);
-		IPage<IsvInfo> pages = isvInfoService.page(Condition.getPage(query), Condition.getQueryWrapper(isvInfo));
+		LambdaQueryWrapper<IsvInfo> wrapper = Wrappers.<IsvInfo>query().lambda();
+		if (!StringUtils.isEmpty(isvInfo.getName())) {
+			wrapper.like(IsvInfo::getName, isvInfo.getName());
+		}
+		if (!StringUtils.isEmpty(isvInfo.getIsvNo())) {
+			wrapper.eq(IsvInfo::getIsvNo, isvInfo.getIsvNo());
+		}
+		wrapper.eq(IsvInfo::getIsBlocked, 1);
+		wrapper.eq(IsvInfo::getIsDeleted, 0);
+		wrapper.orderByDesc(IsvInfo::getUpdateTime);
+		IPage<IsvInfo> pages = isvInfoService.page(Condition.getPage(query), wrapper);
 		return R.data(IsvInfoWrapper.build().pageVO(pages));
 	}
 
@@ -70,7 +81,7 @@ public class BlocklistController {
 	 */
 	@GetMapping("/queryIsvNotInBlackList")
 	@ApiOperationSupport(order = 4)
-	@ApiOperation(value = "查询不再黑名单的ISV列表")
+	@ApiOperation(value = "查询不在黑名单的ISV列表")
 	public R<List<IsvInfoVO>> queryIsvNotInBlackList(IsvInfo isvInfo) {
 		isvInfo.setIsBlocked(0);
 		isvInfo.setIsDeleted(0);
