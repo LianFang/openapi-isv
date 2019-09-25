@@ -16,10 +16,10 @@
  */
 package com.cicada.openapi.isv.service;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.extension.service.IService;
 import com.cicada.openapi.isv.entity.IsvInfo;
 import com.cicada.openapi.isv.vo.IsvInfoVO;
-import com.baomidou.mybatisplus.extension.service.IService;
-import com.baomidou.mybatisplus.core.metadata.IPage;
 
 /**
  * isv信息表，每个isv创建都会在先在user表里面生成该isv的登陆信息，然后在该表生成isv的额外信息。
@@ -40,4 +40,17 @@ public interface IIsvInfoService extends IService<IsvInfo> {
 	IPage<IsvInfoVO> selectIsvInfoPage(IPage<IsvInfoVO> page, IsvInfoVO isvInfo);
 
 
+	/**
+	 * isv添加黑名单
+	 * @param isvNo
+	 * @return
+	 */
+	boolean addBlockList(String isvNo);
+
+	/**
+	 * 将isv移除黑名单
+	 * @param isvNo
+	 * @return
+	 */
+	boolean removeBlockList(String isvNo);
 }

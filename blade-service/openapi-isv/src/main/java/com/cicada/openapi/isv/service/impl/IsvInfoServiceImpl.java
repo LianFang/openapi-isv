@@ -16,13 +16,19 @@
  */
 package com.cicada.openapi.isv.service.impl;
 
+import com.baomidou.mybatisplus.core.metadata.IPage;
+import com.baomidou.mybatisplus.core.toolkit.Wrappers;
+import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
 import com.cicada.openapi.isv.entity.IsvInfo;
-import com.cicada.openapi.isv.vo.IsvInfoVO;
 import com.cicada.openapi.isv.mapper.IsvInfoMapper;
 import com.cicada.openapi.isv.service.IIsvInfoService;
-import com.baomidou.mybatisplus.extension.service.impl.ServiceImpl;
+import com.cicada.openapi.isv.vo.IsvInfoVO;
+import com.google.common.collect.Maps;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.stereotype.Service;
-import com.baomidou.mybatisplus.core.metadata.IPage;
+
+import java.time.LocalDateTime;
+import java.util.Map;
 
 /**
  * isv信息表，每个isv创建都会在先在user表里面生成该isv的登陆信息，然后在该表生成isv的额外信息。
@@ -39,4 +45,44 @@ public class IsvInfoServiceImpl extends ServiceImpl<IsvInfoMapper, IsvInfo> impl
 		return page.setRecords(baseMapper.selectIsvInfoPage(page, isvInfo));
 	}
 
+	private IsvInfo queryByIsvNo(String isvNo) {
+		Map<String, Object> condition = Maps.newHashMap();
+		condition.put("isv_no", isvNo);
+		condition.put("is_deleted", 0);
+		return this.getOne(Wrappers.<IsvInfo>query().allEq(condition));
+	}
+
+	@Override
+	public boolean addBlockList(String isvNo) {
+		if (StringUtils.isBlank(isvNo)) {
+			throw new IllegalArgumentException("参数不合法");
+		}
+		IsvInfo isvInfo = this.queryByIsvNo(isvNo);
+		if (isvInfo == null) {
+			throw new IllegalArgumentException("ISV不存在");
+		}
+		if (isvInfo.getIsBlocked() == 1) {
+			throw new IllegalArgumentException("ISV已经加入黑名单");
+		}
+		isvInfo.setIsBlocked(1);
+		isvInfo.setUpdateTime(LocalDateTime.now());
+		return this.updateById(isvInfo);
+	}
+
+	@Override
+	public boolean removeBlockList(String isvNo) {
+		if (StringUtils.isBlank(isvNo)) {
+			throw new IllegalArgumentException("参数不合法");
+		}
+		IsvInfo isvInfo = this.queryByIsvNo(isvNo);
+		if (isvInfo == null) {
+			throw new IllegalArgumentException("ISV不存在");
+		}
+		if (isvInfo.getIsBlocked() == 0) {
+			throw new IllegalArgumentException("ISV不在黑名单");
+		}
+		isvInfo.setIsBlocked(0);
+		isvInfo.setUpdateTime(LocalDateTime.now());
+		return this.updateById(isvInfo);
+	}
 }
