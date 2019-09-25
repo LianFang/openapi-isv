@@ -13,6 +13,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiOperationSupport;
 import io.swagger.annotations.ApiParam;
 import lombok.AllArgsConstructor;
+import org.springblade.core.boot.ctrl.BladeController;
 import org.springblade.core.mp.support.Condition;
 import org.springblade.core.mp.support.Query;
 import org.springblade.core.tool.api.R;
@@ -31,7 +32,7 @@ import java.util.List;
 @AllArgsConstructor
 @RequestMapping("/blocklist")
 @Api(value = "isv黑名单管理", tags = "isv黑名单管理")
-public class BlocklistController {
+public class BlocklistController extends BladeController {
 
 	private IIsvInfoService isvInfoService;
 
@@ -62,8 +63,8 @@ public class BlocklistController {
 	@PostMapping("/save")
 	@ApiOperationSupport(order = 2)
 	@ApiOperation(value = "新增")
-	public R save(@ApiParam(value = "isvNo", required = true) @RequestParam String isvNo) {
-		return R.status(isvInfoService.addBlockList(isvNo));
+	public R save(@ApiParam(value = "isvNo", required = true) @RequestBody IsvInfo isvInfo) {
+		return R.status(isvInfoService.addBlockList(isvInfo.getIsvNo()));
 	}
 
 	/**
@@ -72,8 +73,8 @@ public class BlocklistController {
 	@PostMapping("/remove")
 	@ApiOperationSupport(order = 3)
 	@ApiOperation(value = "删除")
-	public R remove(@ApiParam(value = "isvNo", required = true) @RequestParam String isvNo) {
-		return R.status(isvInfoService.removeBlockList(isvNo));
+	public R remove(@ApiParam(value = "ids", required = true) @RequestParam String ids) {
+		return R.status(isvInfoService.removeBlockList(ids));
 	}
 
 	/**

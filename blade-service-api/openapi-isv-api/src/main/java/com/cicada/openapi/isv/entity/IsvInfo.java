@@ -16,6 +16,8 @@
  */
 package com.cicada.openapi.isv.entity;
 
+import com.baomidou.mybatisplus.annotation.IdType;
+import com.baomidou.mybatisplus.annotation.TableId;
 import com.baomidou.mybatisplus.annotation.TableName;
 import io.swagger.annotations.ApiModel;
 import io.swagger.annotations.ApiModelProperty;
@@ -26,7 +28,7 @@ import java.time.LocalDateTime;
 
 /**
  * isv信息表，每个isv创建都会在先在user表里面生成该isv的登陆信息，然后在该表生成isv的额外信息。
-该表和user表是一一对应的实体类
+ * 该表和user表是一一对应的实体类
  *
  * @author BladeX
  * @since 2019-09-20
@@ -39,40 +41,44 @@ public class IsvInfo implements Serializable {
 	private static final long serialVersionUID = 1L;
 
 	/**
-	* 主键
-	*/
-		@ApiModelProperty(value = "主键")
-		private Long id;
+	 * 主键
+	 */
+	@TableId(
+		value = "id",
+		type = IdType.AUTO
+	)
+	@ApiModelProperty(value = "主键")
+	private Long id;
 	/**
-	* 用户id，关联到blade_user表中
-	*/
-		@ApiModelProperty(value = "用户id，关联到blade_user表中")
-		private Long userId;
+	 * 用户id，关联到blade_user表中
+	 */
+	@ApiModelProperty(value = "用户id，关联到blade_user表中")
+	private Long userId;
 	/**
-	* isv的联系人
-	*/
-		@ApiModelProperty(value = "isv的联系人")
-		private String contact;
+	 * isv的联系人
+	 */
+	@ApiModelProperty(value = "isv的联系人")
+	private String contact;
 	/**
-	* isv的联系电话
-	*/
-		@ApiModelProperty(value = "isv的联系电话")
-		private String phone;
+	 * isv的联系电话
+	 */
+	@ApiModelProperty(value = "isv的联系电话")
+	private String phone;
 	/**
-	* isv名称，公司名称
-	*/
-		@ApiModelProperty(value = "isv名称，公司名称")
-		private String name;
+	 * isv名称，公司名称
+	 */
+	@ApiModelProperty(value = "isv名称，公司名称")
+	private String name;
 	/**
-	* 营业执照扫副本描件，url
-	*/
-		@ApiModelProperty(value = "营业执照扫副本描件，url")
-		private String businessLicense;
+	 * 营业执照扫副本描件，url
+	 */
+	@ApiModelProperty(value = "营业执照扫副本描件，url")
+	private String businessLicense;
 	/**
-	* isv地址
-	*/
-		@ApiModelProperty(value = "isv地址")
-		private String address;
+	 * isv地址
+	 */
+	@ApiModelProperty(value = "isv地址")
+	private String address;
 	private Long createUser;
 	private LocalDateTime createTime;
 	private Long updateUser;

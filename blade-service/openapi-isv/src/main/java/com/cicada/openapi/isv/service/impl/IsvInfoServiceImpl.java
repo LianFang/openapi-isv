@@ -70,11 +70,11 @@ public class IsvInfoServiceImpl extends ServiceImpl<IsvInfoMapper, IsvInfo> impl
 	}
 
 	@Override
-	public boolean removeBlockList(String isvNo) {
-		if (StringUtils.isBlank(isvNo)) {
+	public boolean removeBlockList(String id) {
+		if (StringUtils.isBlank(id)) {
 			throw new IllegalArgumentException("参数不合法");
 		}
-		IsvInfo isvInfo = this.queryByIsvNo(isvNo);
+		IsvInfo isvInfo = baseMapper.selectById(id);
 		if (isvInfo == null) {
 			throw new IllegalArgumentException("ISV不存在");
 		}
